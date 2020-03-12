@@ -15,6 +15,7 @@ z <- 4
 w <- 5
 s <- 3
 v <- 4
+c <- 5
 # libraries and helper files---------------------------------------------------
 library(tidyverse)
 library(stringr)
