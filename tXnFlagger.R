@@ -21,4 +21,39 @@ library(magrittr)
 library(readr)
 library(countrycode)
 library(wrapr) # learn more about this, useful for finding 
-# unique rows in a dataset. 
+ 
+# set working directory-------------------------------------------------------
+setwd("C:/Users/Aarsh/Dropbox/TxnFlagger")
+
+# get clean dataset-----------------------------------------------------------
+
+# This will come from the "cleaning.R" file. For now, I have the clean 
+# dataset ready.
+
+dsCleaned <- read_xlsx("tXnFlagger.xlsx", sheet = "Sheet1")
+
+
+# Rules-----------------------------------------------------------------------
+
+# Flag transactions, and for each transaction list the rule(s) that caused
+# its flagging.
+
+# Rule 1: Flag new counterparties with dates and amounts of transactions
+
+dsCleaned_arrBenDate <- dsCleaned %>% dplyr::arrange(Beneficiary, 
+                                                       Date)
+
+dsCleaned_arrBenDate_grpBen <- dsCleaned_arrBenDate %>% dplyr::group_by(
+  Beneficiary
+)
+
+dsCleaned_arrBenDate_grpBen_summSelFirst <- dsCleaned_arrBenDate_grpBen %>%
+  dplyr::summarise(firstTransUniqID = uniqID[[1]])
+
+
+dsCleaned_filterRule1 <- dplyr::filter(
+  dsCleaned, uniqID %in% dsCleaned_arrBenDate_grpBen_summSelFirst$firstTransUniqID)
+
+dsCleaned_filterRule1 <- dsCleaned_filterRule1 %>% dplyr::mutate(
+  ruleUniqueID = "r1"
+)
