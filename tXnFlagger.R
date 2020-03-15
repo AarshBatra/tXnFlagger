@@ -3,7 +3,7 @@
 
 # metadata---------------------------------------------------------------------
 # Author: Aarsh Batra
-# Date: February 8, 2020
+# Date: March 14, 2020
 # R version: 3.4.2 (2017-09-28)
 
 
@@ -60,4 +60,9 @@ dsCleaned_filterRule1 <- dsCleaned_filterRule1 %>% dplyr::mutate(
 
 # Rule 2: Exceptional Amounts per counterparty 
 
+dsCleaned_grpBen <- dplyr::group_by(dsCleaned, Beneficiary)
+dsCleaned_grpBen_summStats <- dplyr::summarise(
+  avgAmountSpent = mean(Amount, na.rm = TRUE), 
+  stDevAmountSpent = sd(Amount, na.rm = TRUE)
+)
 
