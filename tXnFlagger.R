@@ -32,6 +32,8 @@ setwd("C:/Users/Aarsh/Dropbox/TxnFlagger")
 
 dsCleaned <- read_xlsx("tXnFlagger.xlsx", sheet = "Sheet1")
 
+# cleaning steps: to be transferred to the cleaning file
+dsCleaned$Amount <- as.numeric(dsCleaned$Amount)
 
 # Rules-----------------------------------------------------------------------
 
@@ -61,7 +63,7 @@ dsCleaned_filterRule1 <- dsCleaned_filterRule1 %>% dplyr::mutate(
 # Rule 2: Exceptional Amounts per counterparty 
 
 dsCleaned_grpBen <- dplyr::group_by(dsCleaned, Beneficiary)
-dsCleaned_grpBen_summStats <- dplyr::summarise(
+dsCleaned_grpBen_summStats <- dsCleaned %>% dplyr::summarise(
   avgAmountSpent = mean(Amount, na.rm = TRUE), 
   stDevAmountSpent = sd(Amount, na.rm = TRUE)
 )
