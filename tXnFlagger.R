@@ -60,7 +60,4 @@ dsCleaned_filterRule1 <- dsCleaned_filterRule1 %>% dplyr::mutate(
 
 # Rule 2: Exceptional Amounts per counterparty 
 
-aj1
-as
-ad
 
