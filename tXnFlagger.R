@@ -32,6 +32,8 @@ setwd("C:/Users/Aarsh/Dropbox/TxnFlagger")
 
 dsCleaned <- read_xlsx("tXnFlagger.xlsx", sheet = "Sheet1")
 
+# cleaning steps: to be transferred to the cleaning file
+dsCleaned$Amount <- as.numeric(dsCleaned$Amount)
 
 # Rules-----------------------------------------------------------------------
 
