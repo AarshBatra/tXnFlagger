@@ -59,3 +59,31 @@ dsCleaned_filterRule1 <- dplyr::filter(
 dsCleaned_filterRule1 <- dsCleaned_filterRule1 %>% dplyr::mutate(
   ruleUniqueID = "r1"
 )
+
+# Rule 2: Exceptional Amounts per counterparty 
+
+dsCleaned_grpBen <- dplyr::group_by(dsCleaned, Beneficiary)
+dsCleaned_grpBen_summStats <- dsCleaned_grpBen %>% dplyr::summarise(
+  avgAmountSpent = mean(Amount, na.rm = TRUE), 
+  stDevAmountSpent = sd(Amount, na.rm = TRUE), 
+  n = n()
+)
+
+# Now use the dplyr "join" family of functions to add the summary stats
+# to the dsCleaned dataset
+
+dsCleaned <- dsCleaned %>% 
+  left_join(dsCleaned_grpBen_summStats, by = "Beneficiary")
+
+View(dsCleaned)
+
+dsCleaned_filterRule2 <- dplyr::filter(
+  dsCleaned, n > 15, 
+  ((Amount > (avgAmountSpent + (2*stDevAmountSpent))) | 
+     (Amount < (avgAmountSpent - (2*stDevAmountSpent))))
+)
+  
+  
+dsCleaned_filterRule2 <- dsCleaned_filterRule2 %>% dplyr::mutate(
+  ruleUniqueID = "r2"
+)
