@@ -84,3 +84,6 @@ dsCleaned_filterRule2 <- dplyr::filter(
 )
   
   
+dsCleaned_filterRule2 <- dsCleaned_filterRule2 %>% dplyr::mutate(
+  ruleUniqueID = "r2"
+)
