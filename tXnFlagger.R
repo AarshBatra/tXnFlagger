@@ -87,3 +87,18 @@ dsCleaned_filterRule2 <- dplyr::filter(
 dsCleaned_filterRule2 <- dsCleaned_filterRule2 %>% dplyr::mutate(
   ruleUniqueID = "r2"
 )
+
+# Rule 3: Figure out the customer basket and flag transactions that contain
+# that contain products that are out of that basket.
+
+dsCleaned_grpBen_summProdBought <- dsCleaned_grpBen %>% dplyr::summarise(
+  prodBought = list(unique(`On Account`))
+)
+
+
+
+
+
+
+
+
